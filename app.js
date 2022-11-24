@@ -1,5 +1,5 @@
 const express = require("express");
-const router = require("./src/routes/api")
+// const router = require("./src/routes/api")
 const app = new express();
 const bodyParser = require("body-parser");
 const authRoute = require("./src/routes/auth")
@@ -17,7 +17,17 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
 
+app.use((err,req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong";
 
+  return res.status(errorStatus).json({
+    success:false,
+    status:errorStatus,
+    message:errorMessage,
+    stack:err.stack,
+  })
+})
 
 //database
 const mongoose = require("mongoose");
@@ -53,17 +63,7 @@ app.use('/api/v1/hotels', hotelsRoute)
 app.use('/api/v1/rooms', roomsRoute)
 
 //middleware
-app.use((err,req, res, next) => {
-  const errorStatus = err.status || 500;
-  const errorMessage = err.message || "Something went wrong";
 
-  return res.status(errorStatus).json({
-    success:false,
-    status:errorStatus,
-    message:errorMessage,
-    stack:err.stack,
-  })
-})
 
 
 
