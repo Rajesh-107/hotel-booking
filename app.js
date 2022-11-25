@@ -6,7 +6,8 @@ const authRoute = require("./src/routes/auth")
 const usersRoute = require("./src/routes/users")
 const hotelsRoute = require("./src/routes/hotels")
 const roomsRoute = require("./src/routes/rooms")
-
+const cookieParser = require('cookie-parser')
+require("dotenv").config();
 
 
 //middleware
@@ -39,6 +40,7 @@ app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 
