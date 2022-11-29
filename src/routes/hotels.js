@@ -1,20 +1,21 @@
 const express = require("express");
-const  HotelController  = require("../controllers/hotelcontroller");
-const Hotel = require("../models/Hotel");
-const { verifyAdmin } = require("../utils/verifyToken");
-// import {createError} from "../utils/error.js"
+const HotelController = require("../controllers/hotelcontroller");
+
+
 
 const router = express.Router();
 
 //Create
-router.post("/", verifyAdmin, HotelController.createHotel);
+router.post("/", HotelController.createHotel);
 //update
-router.put("/:id", verifyAdmin, HotelController.updateHotel);
+router.put("/:id", HotelController.updateHotel);
 //Delete
-router.delete("/:id",verifyAdmin, HotelController.deleteHotel);
+router.delete("/:id",  HotelController.deleteHotel);
 //get
-router.get("/:id", HotelController.getHotel);
+router.get("/find/:id", HotelController.getHotel);
 //get all
 router.get("/", HotelController.getAllHotel);
+router.get("/countByCity", HotelController.countByCity);
+router.get("/countByType", HotelController.countByType);
 
 module.exports = router;
